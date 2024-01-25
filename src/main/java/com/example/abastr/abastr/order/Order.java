@@ -6,11 +6,11 @@ public class Order {
 
     private String prodNumber;
     private int quantity;
-    private float unitPrice;
+    private double unitPrice;
 
     public Order() { }
 
-    public Order(String prodNumber, int quantity, float unitPrice) {
+    public Order(String prodNumber, int quantity, double unitPrice) {
         this.prodNumber = prodNumber;
         this.quantity = quantity;
         this.unitPrice = unitPrice;
@@ -18,5 +18,5 @@ public class Order {
 
     public String getProdNumber() { return this.prodNumber; }
     public int getQuantity() { return this.quantity; }
-    public float getUnitPrice() {return this.unitPrice; }
+    public double getUnitPrice() {return this.unitPrice; }
 }

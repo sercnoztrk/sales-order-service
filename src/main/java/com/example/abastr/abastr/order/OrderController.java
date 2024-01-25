@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 public class OrderController {
-    private static LinkedHashMap<String, Map<String, List<Order>>> orders = new LinkedHashMap<>();
+    public static LinkedHashMap<String, Map<String, List<Order>>> orders = new LinkedHashMap<>();
     static {
         Map<String, List<Order>> orderItems = new HashMap<>();        
         orderItems.put("2000", new ArrayList<>());
@@ -69,14 +69,14 @@ public class OrderController {
     
     @GetMapping("/orders/total-prices")
     public ResponseEntity<Object> getTotalPrices() {
-        Map<String, Map<String, Float>> prices = new HashMap<>();
+        Map<String, Map<String, Double>> prices = new HashMap<>();
         for (String iterOrders : orders.keySet()) {
             // System.out.println("\nOrder Number: " + iterOrders);
             prices.put(iterOrders, new HashMap<>());
             Map<String, List<Order>> currentOrder = orders.get(iterOrders);
-            float itemTotal, orderTotal = 0f;
+            double itemTotal, orderTotal = 0;
             for (String iterProducts : currentOrder.keySet()) {
-                itemTotal = 0f;
+                itemTotal = 0;
                 for (Order o : currentOrder.get(iterProducts)) {
                     itemTotal = itemTotal + (o.getUnitPrice() * o.getQuantity());
                     // System.out.print("Product Number: " + o.getProdNumber() + " Quantity: " + o.getQuantity() + " Unit Price: " + o.getUnitPrice());
@@ -99,7 +99,7 @@ public class OrderController {
             Map<String, List<Order>> currentOrder = orders.get(iterOrders);
             avg.setOrderNumber(iterOrders);
             int totalQuantity = 0;
-            float totalPrice = 0f;
+            double totalPrice = 0;
             for (String iterProducts : currentOrder.keySet()) {
                 for (Order o : currentOrder.get(iterProducts)) {
                     totalQuantity = totalQuantity + o.getQuantity();
