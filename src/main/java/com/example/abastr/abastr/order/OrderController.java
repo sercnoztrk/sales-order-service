@@ -30,21 +30,21 @@ public class OrderController {
         orderItems.put("2003", new ArrayList<>());
         orderItems.put("2004", new ArrayList<>());
         
-        orderItems.get("2000").add(new Order("2000", 2 , 100.51f));
-        orderItems.get("2001").add(new Order("2001", 31 , 200f));
-        orderItems.get("2002").add(new Order("2002", 22 , 150.86f));
-        orderItems.get("2003").add(new Order("2003", 41 , 250f));
-        orderItems.get("2004").add(new Order("2004", 55 , 244f));
+        orderItems.get("2000").add(new Order("1000", "2000", 2 , 100.51f));
+        orderItems.get("2001").add(new Order("1000", "2001", 31 , 200f));
+        orderItems.get("2002").add(new Order("1000", "2002", 22 , 150.86f));
+        orderItems.get("2003").add(new Order("1000", "2003", 41 , 250f));
+        orderItems.get("2004").add(new Order("1000", "2004", 55 , 244f));
         orders.put("1000", orderItems);
         
         orderItems = new HashMap<>();
         orderItems.put("2001", new ArrayList<>());
         orderItems.put("2002", new ArrayList<>());
         orderItems.put("2004", new ArrayList<>());
-        orderItems.get("2001").add(new Order("2001", 88 , 44.531f));
-        orderItems.get("2002").add(new Order("2002", 121 , 88.11f));
-        orderItems.get("2002").add(new Order("2002", 14 , 88.11f));
-        orderItems.get("2004").add(new Order("2004", 74 , 211f));
+        orderItems.get("2001").add(new Order("1001", "2001", 88 , 44.531f));
+        orderItems.get("2002").add(new Order("1001", "2002", 121 , 88.11f));
+        orderItems.get("2002").add(new Order("1001", "2002", 14 , 88.11f));
+        orderItems.get("2004").add(new Order("1001", "2004", 74 , 211f));
         orders.put("1001", orderItems);
         
         orderItems = new HashMap<>();
@@ -53,12 +53,12 @@ public class OrderController {
         orderItems.put("2002", new ArrayList<>());
         orderItems.put("2005", new ArrayList<>());
         orderItems.put("2006", new ArrayList<>());
-        orderItems.get("2003").add(new Order("2003", 2 , 12.1f));
-        orderItems.get("2003").add(new Order("2003", 8 , 12.1f));
-        orderItems.get("2004").add(new Order("2004", 3 , 22.3f));
-        orderItems.get("2002").add(new Order("2002", 16 , 94f));
-        orderItems.get("2005").add(new Order("2005", 9 , 44.1f));
-        orderItems.get("2006").add(new Order("2006", 19 , 90f));
+        orderItems.get("2003").add(new Order("1002", "2003", 2 , 12.1f));
+        orderItems.get("2003").add(new Order("1002", "2003", 8 , 12.1f));
+        orderItems.get("2004").add(new Order("1002", "2004", 3 , 22.3f));
+        orderItems.get("2002").add(new Order("1002", "2002", 16 , 94f));
+        orderItems.get("2005").add(new Order("1002", "2005", 9 , 44.1f));
+        orderItems.get("2006").add(new Order("1002", "2006", 19 , 90f));
         orders.put("1002", orderItems);
     }
     
@@ -71,7 +71,6 @@ public class OrderController {
     public ResponseEntity<Object> getTotalPrices() {
         Map<String, Map<String, Double>> prices = new HashMap<>();
         for (String iterOrders : orders.keySet()) {
-            // System.out.println("\nOrder Number: " + iterOrders);
             prices.put(iterOrders, new HashMap<>());
             Map<String, List<Order>> currentOrder = orders.get(iterOrders);
             double itemTotal, orderTotal = 0;
@@ -79,12 +78,9 @@ public class OrderController {
                 itemTotal = 0;
                 for (Order o : currentOrder.get(iterProducts)) {
                     itemTotal = itemTotal + (o.getUnitPrice() * o.getQuantity());
-                    // System.out.print("Product Number: " + o.getProdNumber() + " Quantity: " + o.getQuantity() + " Unit Price: " + o.getUnitPrice());
                 }
-                // System.out.print(" --- Item Total: " + itemTotal + "\n");
                 orderTotal = orderTotal + itemTotal;
             }
-            // System.out.println("Order Total: " + orderTotal);
             prices.get(iterOrders).put("orderTotal", orderTotal);
         }
         return new ResponseEntity<>(prices, HttpStatus.OK);
